@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# dotenv
+.env
+.env.*
+!.env.example
+
+# Local helper state
+.last_cleanup
+
+# Logs
+*.log
+
+# Local databases / runtime artifacts
+*.db
+*.sqlite
+*.sqlite3
+parser.db
+
+# Debug outputs / dumps
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.json
+*.html
+*.har
+*.zip
+*.csv
+
+# Local test scripts
+test_*.py
+
+# Tests / local artifacts
+test.jpg
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.iml
+
+# Build
+build/
+dist/
+*.egg-info/
