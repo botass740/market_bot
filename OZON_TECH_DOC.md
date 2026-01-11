@@ -1,9 +1,6 @@
 # OZON модуль — техническая документация
 
 Документ описывает OZON‑часть проекта: сбор SKU (COLLECT), мониторинг (MONITOR), интеграцию с пайплайном и БД, конфигурацию через ENV и диагностику на VPS.
-
-> Важно: в документе не используются реальные токены/пароли/DSN/прокси. Везде используются плейсхолдеры.
-
 ---
 
 ## 1) Назначение OZON‑модуля
@@ -41,23 +38,6 @@ OZON‑модуль выполняет две задачи:
 
 4. (Опционально) авто‑удаление/добор/ротация:
    - может удалять часть товаров и добирать новых через COLLECT.
-
-### 2.2 Текстовая диаграмма
-APScheduler job
-└─ ozon_job() in bot/main.py
-├─ read OZON IDs from DB
-├─ OzonParser(product_ids)
-└─ PipelineRunner.run_platform(OZON, parser)
-├─ parser.fetch_products()
-├─ parse (MONITOR or COLLECT)
-├─ FilterService.filter_products_async()
-├─ detect_and_save_changes()
-├─ select_for_publish()
-└─ PostingService.post_product()
-
-text
-
-
 ---
 
 ## 3) Файлы OZON‑части и назначение каждого
@@ -320,36 +300,29 @@ OZON‑аспекты:
 ### 8.2 Полезные команды
 
 **Проверка CDP (если используется):**
-```bash
+
 curl -s http://127.0.0.1:9222/json/version | head
 Проверка статуса OZON через curl:
-
-Bash
 
 curl -s -L -o /dev/null -w "%{http_code}\n" https://www.ozon.ru/
 Проверка прокси healthcheck (минимальный трафик):
 
-Bash
-
 curl -s --max-time 15 -x http://PROXY_HOST:PORT -U 'USER:PASS' -H "Range: bytes=0-0" -D - -o /dev/null https://api.ipify.org?format=json | head
 Проверка редиректов OZON:
 
-Bash
-
 curl -s -L -D - -o /dev/null https://www.ozon.ru/ | sed -n '1,120p'
-9) Запуск OZON части
-9.1 Локально
+
+## 9) Запуск OZON части
+### 9.1 Локально
 настроить .env
 установить зависимости
 python -m bot
 9.2 На VPS (общо)
 venv активировать:
-Bash
 
 cd /opt/parser-bot
 source .venv/bin/activate
 запуск:
-Bash
 
 python -m bot
 Если используется CDP‑браузер:
